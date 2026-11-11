@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Touhou Store | Anime Figure Stock Catalog</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Noto+Serif+JP:wght@700;900&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            shrine: {
+              bg: '#0c070a',
+              card: '#160d13',
+              border: '#381b2c',
+              crimson: '#e11d48',
+              crimsonGlow: '#ff2a5f',
+              gold: '#f59e0b',
+              cream: '#fdf2f8'
+            }
+          },
+          fontFamily: {
+            display: ['Cinzel', 'Noto Serif JP', 'serif'],
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            jp: ['Noto Serif JP', 'serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #0c070a;
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(225, 29, 72, 0.14) 0%, transparent 35%),
+        radial-gradient(circle at 85% 80%, rgba(245, 158, 11, 0.08) 0%, transparent 40%),
+        linear-gradient(to bottom, #0c070a, #120910);
+      color: #fdf2f8;
+    }
+    /* Touhou Ofuda Talisman Corner Border Effect */
+    .spell-card {
+      position: relative;
+      transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .spell-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 14px 30px -10px rgba(225, 29, 72, 0.35), 0 0 15px rgba(245, 158, 11, 0.15);
+      border-color: #e11d48;
+    }
+    .shrine-tag {
+      background: linear-gradient(135deg, #e11d48 0%, #9f1239 100%);
+    }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #0c070a; }
+    ::-webkit-scrollbar-thumb { background: #381b2c; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #e11d48; }
+  </style>
+</head>
+<body class="min-h-screen font-sans antialiased selection:bg-shrine-crimson selection:text-white">
+
+  <!-- Top Japanese Banner Bar -->
+  <div class="bg-gradient-to-r from-rose-950 via-shrine-crimson to-rose-950 text-white text-xs py-2 px-4 text-center tracking-widest uppercase font-semibold border-b border-amber-500/30">
+    <span>⛩️ 東方ストア • Official Live Stock Catalog • DM on Facebook to Claim ⛩️</span>
+  </div>
+
+  <!-- Hero Header -->
+  <header class="relative overflow-hidden border-b border-shrine-border bg-black/40 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 text-center relative z-10">
+      <!-- Background Decorative Kanji -->
+      <div class="font-jp text-7xl sm:text-9xl font-black text-rose-500/5 select-none pointer-events-none absolute inset-0 flex items-center justify-center tracking-widest">
+        幻想郷
+      </div>
+
+      <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-rose-950/80 border border-rose-500/40 text-rose-300 text-xs font-medium mb-4">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        LIVE INVENTORY FEED
+      </div>
+
+      <h1 class="font-display text-4xl sm:text-6xl font-extrabold tracking-wider text-white drop-shadow-[0_2px_15px_rgba(225,29,72,0.5)]">
+        TOUHOU <span class="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 via-amber-400 to-rose-500">STORE</span>
+      </h1>
+      <p class="mt-3 text-sm sm:text-base text-rose-200/75 max-w-xl mx-auto">
+        Authentic Anime Figures, Scale Statues & Prize Collectibles. Quantities update in real time.
+      </p>
+    </div>
+  </header>
+
+  <!-- Controls: Search, Series Filter & Availability Toggle -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-4">
+    <div class="bg-shrine-card/90 border border-shrine-border rounded-2xl p-4 sm:p-5 shadow-xl backdrop-blur-md">
+      <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
+        
+        <!-- Search Input -->
+        <div class="relative w-full md:w-96">
+          <input 
+            id="searchInput" 
+            type="text" 
+            placeholder="Search character, anime, or brand..." 
+            class="w-full bg-black/60 border border-shrine-border focus:border-shrine-crimson rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder-rose-300/40 outline-none transition"
+          />
+          <svg class="w-4 h-4 text-rose-400/70 absolute left-3.5 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+        </div>
+
+        <!-- In-Stock Filter & Counter -->
+        <div class="flex items-center justify-between w-full md:w-auto gap-4">
+          <label class="inline-flex items-center gap-2.5 cursor-pointer text-xs sm:text-sm text-rose-200/90 select-none">
+            <input id="inStockOnly" type="checkbox" class="sr-only peer">
+            <div class="w-9 h-5 bg-rose-950 border border-rose-700/50 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all relative peer-checked:bg-shrine-crimson"></div>
+            <span>Hide Sold Out</span>
+          </label>
+
+          <span id="itemCount" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-black/60 border border-shrine-border text-amber-400">
+            Loading stock...
+          </span>
+        </div>
+      </div>
+
+      <!-- Dynamic Category / Series Pills -->
+      <div id="categoryContainer" class="flex items-center gap-2 overflow-x-auto pt-4 mt-4 border-t border-shrine-border/60 pb-1">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Figure Grid -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <div id="figureGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <!-- Cards injected via JS -->
+    </div>
+
+    <!-- Empty State -->
+    <div id="emptyState" class="hidden text-center py-16">
+      <p class="font-jp text-3xl text-rose-500/40 mb-2">在庫なし</p>
+      <h3 class="text-lg font-bold text-white">No matching figures found</h3>
+      <p class="text-sm text-rose-300/60 mt-1">Try resetting your search filter or check back after the next restock.</p>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-shrine-border mt-16 py-8 text-center text-xs text-rose-300/50">
+    <p class="font-display tracking-widest text-rose-300/80 mb-1">⛩️ TOUHOU STORE ⛩️</p>
+    <p>Screenshot or click "Claim on Facebook" on any available figure to place an order.</p>
+  </footer>
+
+  <script>
+    /*************************************************************************
+     * ⚙️ CONFIGURATION — EDIT THESE 2 VALUES FOR YOUR STORE
+     *************************************************************************/
+    const CONFIG = {
+      // 1. Paste your Google Sheet CSV export link here (leave empty to preview built-in demo stock):
+      SHEET_CSV_URL: "",
+
+      // 2. Your Facebook Profile / Page Messenger link or WhatsApp link
+      // Example FB: "https://m.me/YourPageUsername"
+      // Example WhatsApp: "https://wa.me/923001234567"
+      CONTACT_URL: "https://m.me/YourFacebookUsername"
+    };
+
+    // Fallback Demo Inventory (Automatically replaced when SHEET_CSV_URL is added)
+    const DEMO_FIGURES = [
+      {
+        name: "Reimu Hakurei - Koumajou Densetsu Ver. 1/8",
+        series: "Touhou Project",
+        condition: "MISB (Sealed)",
+        price: "PKR 24,500",
+        stock: 2,
+        image: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=700&q=80",
+        notes: "Ques Q Authentic Import"
+      },
+      {
+        name: "Remilia Scarlet - Blood Moon Scale Figure",
+        series: "Touhou Project",
+        condition: "BIB (9.5/10)",
+        price: "PKR 19,000",
+        stock: 1,
+        image: "https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=700&q=80",
+        notes: "Includes bonus acrylic stand"
+      },
+      {
+        name: "Satoru Gojo - Shibuya Scramble 1/7",
+        series: "Jujutsu Kaisen",
+        condition: "MISB (Sealed)",
+        price: "PKR 32,000",
+        stock: 3,
+        image: "https://images.unsplash.com/photo-1613376023733-0a73315d9b06?auto=format&fit=crop&w=700&q=80",
+        notes: "eStream Limited Edition"
+      },
+      {
+        name: "Sakuya Izayoi - Lunar Clock Nendoroid #800",
+        series: "Touhou Project",
+        condition: "MISB (Sealed)",
+        price: "PKR 11,500",
+        stock: 0,
+        image: "https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?auto=format&fit=crop&w=700&q=80",
+        notes: "Good Smile Company"
+      }
+    ];
+
+    let allFigures = [];
+    let activeSeries = "All";
+
+    // Robust CSV line parser (handles commas inside quotes)
+    function parseCSV(csvText) {
+      const lines = csvText.trim().split(/\r?\n/);
+      if (lines.length < 2) return [];
+      const rows = [];
+      for (let i = 1; i < lines.length; i++) {
+        const cols = lines[i].match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g) || [];
+        const clean = cols.map(c => c.replace(/^"|"$/g, "").trim());
+        if (!clean[0]) continue;
+        rows.push({
+          name: clean[0] || "Unnamed Figure",
+          series: clean[1] || "Other",
+          condition: clean[2] || "MISB",
+          price: clean[3] || "Ask for Price",
+          stock: parseInt(clean[4], 10) || 0,
+          image: clean[5] || "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=700&q=80",
+          notes: clean[6] || ""
+        });
+      }
+      return rows;
+    }
+
+    async function loadInventory() {
+      if (!CONFIG.SHEET_CSV_URL) {
+        allFigures = DEMO_FIGURES;
+        initCatalog();
+        return;
+      }
+      try {
+        const res = await fetch(CONFIG.SHEET_CSV_URL, { cache: "no-store" });
+        const csvText = await res.text();
+        allFigures = parseCSV(csvText);
+      } catch (err) {
+        console.error("Failed to load Google Sheet, falling back to demo data:", err);
+        allFigures = DEMO_FIGURES;
+      }
+      initCatalog();
+    }
+
+    function renderCategories() {
+      const seriesList = ["All", ...new Set(allFigures.map(f => f.series))];
+      const container = document.getElementById("categoryContainer");
+      container.innerHTML = seriesList.map(series => {
+        const isActive = series === activeSeries;
+        return `
+          <button 
+            onclick="setSeries('${series.replace(/'/g, "\\'")}')"
+            class="px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition ${
+              isActive 
+                ? 'shrine-tag text-white shadow-md shadow-rose-900/50 border border-rose-400/40' 
+                : 'bg-black/40 text-rose-200/70 border border-shrine-border hover:border-rose-500/40 hover:text-white'
+            }">
+            ${series}
+          </button>
+        `;
+      }).join("");
+    }
+
+    window.setSeries = function(series) {
+      activeSeries = series;
+      renderCategories();
+      renderGrid();
+    };
+
+    function renderGrid() {
+      const query = document.getElementById("searchInput").value.toLowerCase();
+      const hideSoldOut = document.getElementById("inStockOnly").checked;
+      const grid = document.getElementById("figureGrid");
+      const emptyState = document.getElementById("emptyState");
+
+      const filtered = allFigures.filter(item => {
+        const matchesSeries = activeSeries === "All" || item.series === activeSeries;
+        const matchesSearch = item.name.toLowerCase().includes(query) || 
+                              item.series.toLowerCase().includes(query) || 
+                              item.notes.toLowerCase().includes(query);
+        const matchesStock = !hideSoldOut || item.stock > 0;
+        return matchesSeries && matchesSearch && matchesStock;
+      });
+
+      document.getElementById("itemCount").textContent = `${filtered.length} Figure${filtered.length === 1 ? '' : 's'} Listed`;
+
+      if (filtered.length === 0) {
+        grid.innerHTML = "";
+        emptyState.classList.remove("hidden");
+        return;
+      }
+      emptyState.classList.add("hidden");
+
+      grid.innerHTML = filtered.map(item => {
+        const isAvailable = item.stock > 0;
+        const isLowStock = item.stock > 0 && item.stock <= 2;
+
+        const stockBadge = isAvailable
+          ? `<span class="px-2.5 py-1 rounded-md text-xs font-bold ${isLowStock ? 'bg-amber-500/90 text-black' : 'bg-emerald-500/90 text-black'} backdrop-blur-sm shadow">
+               ● ${item.stock} in Stock${isLowStock ? ' (Low!)' : ''}
+             </span>`
+          : `<span class="px-2.5 py-1 rounded-md text-xs font-bold bg-rose-950/95 text-rose-300 border border-rose-600/40">
+               ✕ SOLD OUT
+             </span>`;
+
+        return `
+          <article class="spell-card bg-shrine-card border border-shrine-border rounded-2xl overflow-hidden flex flex-col justify-between ${!isAvailable ? 'opacity-60 grayscale-[35%]' : ''}">
+            <div>
+              <!-- Image Container -->
+              <div class="relative h-64 w-full bg-black overflow-hidden group">
+                <img src="${item.image}" alt="${item.name}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+                <div class="absolute top-3 left-3">
+                  ${stockBadge}
+                </div>
+                <div class="absolute top-3 right-3">
+                  <span class="px-2.5 py-1 rounded-md text-[11px] font-semibold bg-black/80 text-amber-300 border border-amber-500/30 backdrop-blur-sm">
+                    ${item.condition}
+                  </span>
+                </div>
+                <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-shrine-card via-shrine-card/70 to-transparent h-16"></div>
+              </div>
+
+              <!-- Card Details -->
+              <div class="p-4 pt-1">
+                <div class="text-[11px] font-bold uppercase tracking-wider text-rose-400 mb-1">
+                  ${item.series}
+                </div>
+                <h2 class="font-bold text-base text-white leading-snug line-clamp-2">
+                  ${item.name}
+                </h2>
+                ${item.notes ? `<p class="text-xs text-rose-200/60 mt-1">${item.notes}</p>` : ''}
+              </div>
+            </div>
+
+            <!-- Price & Action Footer -->
+            <div class="p-4 pt-3 border-t border-shrine-border/60 flex items-center justify-between gap-2">
+              <div>
+                <span class="text-[10px] uppercase tracking-wider text-rose-300/50 block">Price</span>
+                <span class="text-lg font-extrabold text-amber-400">${item.price}</span>
+              </div>
+
+              ${isAvailable ? `
+                <a href="${CONFIG.CONTACT_URL}" target="_blank" rel="noopener noreferrer"
+                   class="shrine-tag hover:brightness-110 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition shadow-lg shadow-rose-950/60 flex items-center gap-1.5">
+                  <span>Claim Figure</span>
+                  <span>→</span>
+                </a>
+              ` : `
+                <button disabled class="bg-rose-950/40 border border-shrine-border text-rose-400/40 text-xs font-bold px-4 py-2.5 rounded-xl cursor-not-allowed">
+                  Out of Stock
+                </button>
+              `}
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    function initCatalog() {
+      renderCategories();
+      renderGrid();
+      document.getElementById("searchInput").addEventListener("input", renderGrid);
+      document.getElementById("inStockOnly").addEventListener("change", renderGrid);
+    }
+
+    loadInventory();
+  </script>
+</body>
+</html>
