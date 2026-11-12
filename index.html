@@ -80,7 +80,7 @@
         TOUHOU <span class="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 via-amber-400 to-rose-500">STORE</span>
       </h1>
       <p class="mt-3 text-sm sm:text-base text-rose-200/75 max-w-xl mx-auto">
-        Authentic Anime Figures, Scale Statues & Prize Collectibles. Quantities update in real time.
+        Good Quality Anime Figures, Scale Statues & Prize Collectibles. Quantities update in real time.
       </p>
     </div>
   </header>
@@ -113,7 +113,7 @@
               id="sortSelect" 
               class="bg-black/60 border border-shrine-border focus:border-shrine-crimson rounded-xl px-3 py-2 text-xs sm:text-sm text-white outline-none transition cursor-pointer"
             >
-              <option value="available" selected>Available First (Default)</option>
+              <option value="available" selected>Availability</option>
               <option value="price-asc">Price: Low to High</option>
               <option value="price-desc">Price: High to Low</option>
             </select>
@@ -329,10 +329,10 @@
 
         const stockBadge = isAvailable
           ? `<span class="px-2.5 py-1 rounded-md text-xs font-bold ${isLowStock ? 'bg-amber-500/90 text-black' : 'bg-emerald-500/90 text-black'} backdrop-blur-sm shadow">
-               ● ${item.stock} in Stock${isLowStock ? ' (Low!)' : ''}
+               ● ${item.stock} in Stock${isLowStock ? ' (Low)' : ''}
              </span>`
           : `<span class="px-2.5 py-1 rounded-md text-xs font-bold bg-rose-950/95 text-rose-300 border border-rose-600/40">
-               ✕ SOLD OUT
+                SOLD OUT
              </span>`;
 
         return `
