@@ -85,7 +85,7 @@
     </div>
   </header>
 
-  <!-- Controls: Search, Sort, Series Filter & Availability Toggle -->
+  <!-- Controls: Search, Sort & Series Filter -->
   <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-4">
     <div class="bg-shrine-card/90 border border-shrine-border rounded-2xl p-4 sm:p-5 shadow-xl backdrop-blur-md">
       <div class="flex flex-col lg:flex-row gap-4 items-center justify-between">
@@ -103,7 +103,7 @@
           </svg>
         </div>
 
-        <!-- Sort Dropdown, In-Stock Filter & Counter -->
+        <!-- Sort Dropdown & Counter -->
         <div class="flex flex-wrap items-center justify-between lg:justify-end w-full lg:w-auto gap-3 sm:gap-4">
           
           <!-- Sort Select -->
@@ -113,17 +113,11 @@
               id="sortSelect" 
               class="bg-black/60 border border-shrine-border focus:border-shrine-crimson rounded-xl px-3 py-2 text-xs sm:text-sm text-white outline-none transition cursor-pointer"
             >
-              <option value="available" selected>Availability</option>
-              <option value="price-asc">Price: Low to High</option>
+              <option value="price-asc" selected>Price: Low to High</option>
               <option value="price-desc">Price: High to Low</option>
+              <option value="available">Availability</option>
             </select>
           </div>
-
-          <label class="inline-flex items-center gap-2.5 cursor-pointer text-xs sm:text-sm text-rose-200/90 select-none">
-            <input id="inStockOnly" type="checkbox" class="sr-only peer">
-            <div class="w-9 h-5 bg-rose-950 border border-rose-700/50 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all relative peer-checked:bg-shrine-crimson"></div>
-            <span>Hide Sold Out</span>
-          </label>
 
           <span id="itemCount" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-black/60 border border-shrine-border text-amber-400">
             Loading stock...
@@ -277,7 +271,6 @@
 
     function renderGrid() {
       const query = document.getElementById("searchInput").value.toLowerCase();
-      const hideSoldOut = document.getElementById("inStockOnly").checked;
       const sortMode = document.getElementById("sortSelect").value;
       const grid = document.getElementById("figureGrid");
       const emptyState = document.getElementById("emptyState");
@@ -287,25 +280,24 @@
         const matchesSearch = item.name.toLowerCase().includes(query) || 
                               item.series.toLowerCase().includes(query) || 
                               item.notes.toLowerCase().includes(query);
-        const matchesStock = !hideSoldOut || item.stock > 0;
-        return matchesSeries && matchesSearch && matchesStock;
+        return matchesSeries && matchesSearch;
       });
 
+      // Always keep Available (stock > 0) at the front, then apply price / sheet order
       filtered.sort((a, b) => {
         const aAvail = a.stock > 0 ? 1 : 0;
         const bAvail = b.stock > 0 ? 1 : 0;
 
-        if (sortMode === "available") {
-          if (bAvail !== aAvail) return bAvail - aAvail;
-          return (a.idx || 0) - (b.idx || 0);
-        }
+        if (bAvail !== aAvail) return bAvail - aAvail;
+
         if (sortMode === "price-asc") {
-          if (bAvail !== aAvail) return bAvail - aAvail;
           return parsePriceValue(a.price) - parsePriceValue(b.price);
         }
         if (sortMode === "price-desc") {
-          if (bAvail !== aAvail) return bAvail - aAvail;
           return parsePriceValue(b.price) - parsePriceValue(a.price);
+        }
+        if (sortMode === "available") {
+          return (a.idx || 0) - (b.idx || 0);
         }
         return 0;
       });
@@ -395,7 +387,6 @@
       renderCategories();
       renderGrid();
       document.getElementById("searchInput").addEventListener("input", renderGrid);
-      document.getElementById("inStockOnly").addEventListener("change", renderGrid);
       document.getElementById("sortSelect").addEventListener("change", renderGrid);
     }
 
