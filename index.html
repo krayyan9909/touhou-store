@@ -330,13 +330,13 @@
         return `
           <article class="spell-card bg-shrine-card border border-shrine-border rounded-2xl overflow-hidden flex flex-col justify-between ${!isAvailable ? 'opacity-60 grayscale-[35%]' : ''}">
             <div>
-              <div class="relative h-72 w-full bg-black overflow-hidden group">
+              <div class="relative aspect-[4/5] sm:aspect-square w-full bg-black overflow-hidden group">
                 <img 
                   src="${item.image}" 
                   onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src='${fallbackImg}';}" 
                   alt="${item.name}" 
                   loading="lazy" 
-                  class="w-full h-full object-cover group-hover:scale-105 transition duration-500" 
+                  class="w-full h-full object-cover object-top group-hover:scale-105 transition duration-500" 
                 />
                 <div class="absolute top-3 left-3">
                   ${stockBadge}
