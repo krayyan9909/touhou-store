@@ -109,14 +109,19 @@
           <!-- Sort Select -->
           <div class="flex items-center gap-2">
             <label for="sortSelect" class="text-xs text-rose-200/70 font-medium whitespace-nowrap">Sort by:</label>
-            <select 
-              id="sortSelect" 
-              class="bg-black/60 border border-shrine-border focus:border-shrine-crimson rounded-xl px-3 py-2 text-xs sm:text-sm text-white outline-none transition cursor-pointer"
-            >
-              <option value="price-asc" selected>Price: Low to High</option>
-              <option value="price-desc">Price: High to Low</option>
-              <option value="available">Availability</option>
-            </select>
+            <div class="relative">
+              <select 
+                id="sortSelect" 
+                class="appearance-none bg-black/60 border border-shrine-border focus:border-shrine-crimson rounded-xl pl-3 pr-9 py-2 text-xs sm:text-sm text-white outline-none transition cursor-pointer"
+              >
+                <option value="price-asc" selected>Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+                <option value="available">Availability</option>
+              </select>
+              <svg class="w-3.5 h-3.5 text-rose-300/80 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </div>
           </div>
 
           <span id="itemCount" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-black/60 border border-shrine-border text-amber-400">
